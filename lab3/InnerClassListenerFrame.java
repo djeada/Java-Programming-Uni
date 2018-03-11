@@ -31,7 +31,7 @@ public class InnerClassListenerFrame extends JFrame {
     	slider.addChangeListener(new SliderChangeListener());
 }
 
-    // Klasa wewnêtrzna SliderChangeListener implementuj¹ca ChangeListener
+    // Klasa wewnetrzna SliderChangeListener implementujaca ChangeListener
     
     public class SliderChangeListener implements ChangeListener{
     	
