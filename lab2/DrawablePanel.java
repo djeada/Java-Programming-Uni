@@ -11,16 +11,16 @@ public class DrawablePanel extends JPanel {
 	}
 	
 	public void paintComponent(Graphics g) {
-		//Klasa JPanel posiada metodê paintComponent(), 
-		//DrawablePanel "nadpisuje" oryginaln¹ definicjê. 
-		//konieczne jest wywo³anie oryginalnej metody
+		//Klasa JPanel posiada metodÃª paintComponent(), 
+		//DrawablePanel "nadpisuje" oryginalna definicjÃª. 
+		//konieczne jest wywolanie oryginalnej metody
 		super.paintComponent(g);
 		
-		//czerwony prostok¹t 
+		//czerwony prostokat 
 		g.setColor(Color.red);
 	    g.fillRect(50, 50, 150, 100);
 		
-	    //niebieskie ko³o
+	    //niebieskie kolo
 		g.setColor(Color.blue);
 	 	g.fillOval(250, 250, 150, 150);
 			
