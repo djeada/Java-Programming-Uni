@@ -19,19 +19,13 @@ public class MultiListenerFrame extends JFrame{
 	JRadioButton radioButton1;
 	
 	public static void main(String[] args) {
-		//calling constructor file
+		//wywoluje konstruktor
 		new MultiListenerFrame();
 	}
-	//defining constructor
+	//definiuje konstruktor
 	public MultiListenerFrame() {
-		
-		//creating the frame and setting its size
 		this.setSize(400, 400);
-						
-		//in the middle of the screen
 		this.setLocationRelativeTo(null);
-						
-		//how the frame is going to exit
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 						
 		this.setTitle("Multi Listener Frame");
@@ -74,7 +68,7 @@ public class MultiListenerFrame extends JFrame{
 		}	
 	};
 
-	//Implement Listeners
+	//Implementuje Listenery
 
 	private class labelListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
