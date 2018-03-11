@@ -9,8 +9,8 @@ public class ZadanieA {
 		System.out.println("Promien kola: " + promien + "\nobliczone pole: " + kolo.obliczPole() + "\nobliczony obwod: " + kolo.obliczObwod() + "\n");
 		
 		// Test dla trojkata
-        double a = 5, b = 3, c = 4;
-        Figura trojkat = new Trojkat(a,b,c);
-        System.out.println("Dlugosci bokow: " + a + ", " + b + ", " + c + "\nobliczone pole: " + trojkat.obliczPole()+ "\nobliczony obwod: " + trojkat.obliczObwod() + "\n");
+		double a = 5, b = 3, c = 4;
+		Figura trojkat = new Trojkat(a,b,c);
+		System.out.println("Dlugosci bokow: " + a + ", " + b + ", " + c + "\nobliczone pole: " + trojkat.obliczPole()+ "\nobliczony obwod: " + trojkat.obliczObwod() + "\n");
 	}
 }
