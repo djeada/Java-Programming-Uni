@@ -76,7 +76,6 @@ public class MedianFrame extends JFrame{
 		Collections.sort(liczby);
 		
 		//dla nieparzystej
-		
 		if (liczby.size()%2 != 0){
 			middle = liczby.size()/2;
 			result = liczby.get(middle);
@@ -115,7 +114,7 @@ public class MedianFrame extends JFrame{
 					displayList();
 				}
 				
-				//przy errorze zamyka ca³¹ apkê
+				//przy errorze zamyka cal apke
 				catch(NumberFormatException excep){	
 					JOptionPane.showMessageDialog(MedianFrame.this, "Wpisales cos bardzo zlego", "Error", JOptionPane.ERROR_MESSAGE);System.exit(0);
 				}
