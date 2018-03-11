@@ -7,10 +7,10 @@ import javax.swing.JFrame;
 
 public class CloseableFrame extends JFrame {
     public CloseableFrame() throws HeadlessException {
-    	//Metoda super() widoczna wewn¹trz konstruktorów s³u¿y do wywo³ania konstruktora 
-    	//klasy nadrzêdnej (w tym wypadku JFrame). Znajduje siê ono zawsze na pocz¹tku konstruktora, 
-    	//dziêki czemu mo¿na po nim dodaæ dalszy kod, który sprawi, ¿e klasa CloseableFrame 
-    	//bêdzie rozszerzeniem klasy JFrame.
+    	//Metoda super() widoczna wewnatrz konstruktorow sluzy do wywolania konstruktora 
+    	//klasy nadrzednej (w tym wypadku JFrame). Znajduje sie ono zawsze na poczatku konstruktora, 
+    	//dzieki czemu mozna po nim dodaÃ¦ dalszy kod, ktÃ³ry sprawi, ze klasa CloseableFrame 
+    	//bedzie rozszerzeniem klasy JFrame.
     	super();
 		this.setSize(640,480);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
