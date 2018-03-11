@@ -114,7 +114,7 @@ public class MedianFrame extends JFrame{
 					displayList();
 				}
 				
-				//przy errorze zamyka cal apke
+				//przy errorze zamyka cala apke
 				catch(NumberFormatException excep){	
 					JOptionPane.showMessageDialog(MedianFrame.this, "Wpisales cos bardzo zlego", "Error", JOptionPane.ERROR_MESSAGE);System.exit(0);
 				}
