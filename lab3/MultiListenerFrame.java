@@ -1,5 +1,7 @@
 package lab3;
 
+import javax.swing.JFrame;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -40,14 +42,14 @@ public class MultiListenerFrame extends JFrame{
 		thePanel.add(label1);
 
 		labelListener lLabel = new labelListener();
-		button1 = new JButton("Zmieñ napis na etykiecie");
+		button1 = new JButton("Zmien napis na etykiecie");
 
 		button1.addActionListener(lLabel);
 		thePanel.add(button1);
 		
-		radioButton1 = new JRadioButton("Zmieñ kolor");
+		radioButton1 = new JRadioButton("Zakoncz");
 		radioButton1.setActionCommand("0");
-		radioButton1.addActionListener(colorListener);
+		radioButton1.addActionListener(exitListener);
 		radioButton1.setSelected(true);
 		thePanel.add(radioButton1);
 		
@@ -55,6 +57,8 @@ public class MultiListenerFrame extends JFrame{
 		String[] colors = {"red", "green", "blue"};
 		JComboBox<String> colorList = new JComboBox<String>(colors);
 		thePanel.add(colorList, BorderLayout.PAGE_START);
+		ComboBoxItemListener comboListener = new ComboBoxItemListener(thePanel);
+		colorList.addItemListener(comboListener);
 		
 		this.add(thePanel);
 
@@ -62,10 +66,10 @@ public class MultiListenerFrame extends JFrame{
 
 	}
 	
-	ActionListener colorListener = new ActionListener() {
+	ActionListener exitListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			radioButton1.setBackground(Color.red);
+			System.exit(0);
 					
 		}	
 	};
@@ -78,4 +82,3 @@ public class MultiListenerFrame extends JFrame{
 		}
 	}
 }
-
