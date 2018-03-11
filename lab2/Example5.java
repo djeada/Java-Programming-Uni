@@ -12,7 +12,7 @@ public class Example5 {
 	JPanel panel = new JPanel();
 	frame.add(panel);
 
-	JButton exitButton = new JButton("Zakoñcz"); 
+	JButton exitButton = new JButton("Zakoncz"); 
 	ActionListener exitListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
