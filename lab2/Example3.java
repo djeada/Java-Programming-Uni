@@ -10,9 +10,9 @@ public class Example3 {
 	
 	public static void main(String[] args) {
 		CloseableFrame frame = new CloseableFrame();
-		//Wykorzystano tutaj wygodny GridLayout, który pionowo podzieli³ ramkê 
-		//na dwie równe czêœci. W ka¿dej po³owie okna umieszczono jeden panel, 
-		//a w ka¿dym panelu jedn¹ etykietê.
+		//Wykorzystano tutaj wygodny GridLayout, ktory pionowo podzielil ramke 
+		//na dwie rowne czesci. W kazdej polowie okna umieszczono jeden panel, 
+		//a w kazdym panelu jedna etykiete.
 		frame.setLayout(new GridLayout(1,2));
 			
 		JPanel panel1 = new JPanel();
