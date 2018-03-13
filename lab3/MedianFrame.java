@@ -83,8 +83,12 @@ public class MedianFrame extends JFrame{
 		
 		//dla parzystej
 		else {
-			middle = liczby.size()/2-1;
-			result = liczby.get(middle);
+			if (!liczby.isEmpty()) {
+				for(double i : liczby) {
+					result += i;
+				}
+				result /= liczby.size();
+			}
 		}
 		
 		return result;
