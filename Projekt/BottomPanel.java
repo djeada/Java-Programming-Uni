@@ -78,7 +78,9 @@ public class BottomPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent e) {
         		for(Particle p: animationPanel.particles){
-        			p.move(animationPanel);
+        			p.wallTest(animationPanel);
+        			p.collisionTest(animationPanel);
+        			p.move();
         		}
             	animationPanel.repaint();
         }

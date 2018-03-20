@@ -14,7 +14,8 @@ public class AnimationPanel extends JComponent {
 		static int N = 500;
 		static Color bgColor = Color.black;
 		static Color ballColor = Color.white;
-		static int Radius = 15;
+		static int Radius = 100, radius = 10;
+		static int Mass = 100, mass = 10;
 		Graphics2D graphicSettings;
 		
 		// Holds every particle we create
@@ -43,19 +44,30 @@ public class AnimationPanel extends JComponent {
 			// makes rendering more beautiful
 			graphicSettings.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
 			
-			// Cycle through all of the Particles objects
+			graphicSettings.setColor(ballColor);
 			
-			for(Particle p : particles){								
+			//drawing the big particle
+			Particle big = particles.get(0);
+			
+			graphicSettings.fillOval(big.x,big.y, Radius, Radius);  
+			
+			// Cycle through all of the Particles objects
+			for(Particle p : particles.subList(1, particles.size())){								
 				// Stroke the particle on the screen
-				graphicSettings.setColor(ballColor);
-				graphicSettings.fillOval(p.x-p.radius,p.y-p.radius, Radius, Radius);  
+				graphicSettings.fillOval(p.x-radius,p.y-radius, radius, radius);  
 			} 
 			
 		} 
-		
+
 		public void populate () {
+			
+			//creating one big particle
+			Particle big = new Particle(400, 200, 0, 0, Radius, Mass);
+			particles.add(big);
+
+			//creating n number of smaller particles
 			for(int i = 0; i < N; i++){
-				Particle p = new Particle();
+				Particle p = new Particle(radius, mass);
 				particles.add(p);
 			}
 		}
