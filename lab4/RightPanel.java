@@ -14,8 +14,10 @@ public class RightPanel extends JPanel{
 	JLabel label1, label2;
 	JPanel panel1, panel2;
 	List<JTextField> list1, list2;
+	LeftPanel leftPanel;
 
-	public RightPanel() {
+	public RightPanel(LeftPanel leftPanel) {
+		this.leftPanel = leftPanel;
 		
 		this.setLayout(new BorderLayout());
 		
@@ -66,26 +68,26 @@ public class RightPanel extends JPanel{
 	}
 	
 	public void calc() {
-		if (LeftPanel.isRegular()) {
+		if (leftPanel.radio1.isSelected()) {
 			for (int i = 0; i < UpperPanel.getVertices(); i++) {
 				list1.add(i, new JTextField(
-						(int) (300 * Math.cos((Math.PI / 2 + 2 * Math.PI * i) / UpperPanel.getVertices()+300)) + ""));
+						(int) (200 * Math.cos((Math.PI / 2 + 2 * Math.PI * i) / UpperPanel.getVertices()) + 320) + ""));
 				panel2.add(list1.get(i));
 
 				
 				list2.add(i, new JTextField(
-						(int) (300 * Math.sin((Math.PI / 2 + 2 * Math.PI * i) / UpperPanel.getVertices()+200)) + ""));
+						(int) (200 * Math.sin((Math.PI / 2 + 2 * Math.PI * i) / UpperPanel.getVertices()) + 220) + ""));
 				panel2.add(list2.get(i));
 			}
 			
-		} else {
+		} else if(leftPanel.radio2.isSelected()) {
 			for (int i = 0; i < UpperPanel.getVertices(); i++) {
 				Random rand = new Random();
 				
-				list1.add(i, new JTextField((int) (600*(rand.nextDouble()-0.5)+300) + ""));
-				panel1.add(list1.get(i));
+				list1.add(i, new JTextField((int) (200*(rand.nextDouble()-0.5)+320) + ""));
+				panel2.add(list1.get(i));
 				
-				list2.add(i, new JTextField((int) (600*(rand.nextDouble()-0.5)+200) + ""));
+				list2.add(i, new JTextField((int) (200*(rand.nextDouble()-0.5)+220) + ""));
 				panel2.add(list2.get(i));
 			}
 		}

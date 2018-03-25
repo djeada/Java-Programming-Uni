@@ -27,10 +27,6 @@ public class LeftPanel extends JPanel{
 		
 		this.setBorder(leftBorder);
 		
-		ChangeModeListener mListener= new ChangeModeListener();
-		radio1.addActionListener(mListener);		
-		radio2.addActionListener(mListener);
-
 		//you can't add the whole group all at once
 		//you have to add each one separately
 		this.add(radio1);
@@ -42,21 +38,5 @@ public class LeftPanel extends JPanel{
 		this.setLayout(new GridLayout(2, 1));
 	}
 	
-	private class ChangeModeListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			if(e.getActionCommand() == "REGULAR")
-				setRegular(true);
-			else
-				setRegular(false);
-		}
-	}
-	
-	public static boolean isRegular() {
-		return regular;
-	}
-	
-	public static void setRegular(boolean reg) {
-		LeftPanel.regular = reg;
-	}
 	
 }

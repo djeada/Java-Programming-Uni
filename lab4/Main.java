@@ -31,7 +31,7 @@ public class Main extends JFrame{
 		leftPanel = new LeftPanel();
 		this.add(leftPanel, BorderLayout.WEST);		
 		
-		rightPanel = new RightPanel();
+		rightPanel = new RightPanel(leftPanel);
 		this.add(rightPanel, BorderLayout.EAST);
 		
 		centralPanel = new CentralPanel(rightPanel);
@@ -62,7 +62,7 @@ public class Main extends JFrame{
 		
 		upperPanel.getButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(LeftPanel.isRegular()) {
+				if(leftPanel.radio1.isSelected()) {
 					int length = rightPanel.getList1().size();
 					int[] xArr = new int[length];
 					int[] yArr = new int[length];
