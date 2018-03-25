@@ -1,12 +1,11 @@
 package Projekt;
 
-import java.awt.Rectangle;
 import java.util.*;
 
 import javax.swing.JPanel;
 
 public class Particle extends JPanel{
-	 // instance variables
+	// instance variables
     public int x, y;
     public double vx, vy;
     public int radius;
@@ -19,8 +18,8 @@ public class Particle extends JPanel{
 		y=(new Random()).nextInt(500)+10;
 		
 		//setting default velocity
-        vx = 5*(new Random()).nextGaussian();
-        vy = 5*(new Random()).nextGaussian();
+        vx = (new Random()).nextGaussian() + (new Random()).nextInt(5);
+        vy = (new Random()).nextGaussian() + (new Random()).nextInt(5);
         
         this.radius = r;
         this.mass = m;
@@ -47,39 +46,25 @@ public class Particle extends JPanel{
         vy = -vy;
         y=distance;
     }
-
-    
+	
     // reverse the direction of the particle whenever it reaches one of the four walls
     public void wallTest(AnimationPanel panel) {
     	if (x<radius)bounceOffVerticalWall(panel,radius);
-        if (x>panel.getWidth()-radius) bounceOffVerticalWall(panel,panel.getWidth()-radius);
+        if (x>panel.getWidth()-4*radius) bounceOffVerticalWall(panel,panel.getWidth()-4*radius);
     	if (y<radius)bounceOffHorizontalWall(panel,radius);
-        if (y>panel.getHeight()-radius) bounceOffHorizontalWall(panel,panel.getHeight()-radius);
-    }
-    
-  
-  //Creates a bounding rectangle for collision checking
-    public Rectangle getBounds() {
-    	return new Rectangle(x, y, radius, radius);
+        if (y>panel.getHeight()-4*radius) bounceOffHorizontalWall(panel,panel.getHeight()-4*radius);
     }
 
     public void collisionTest(AnimationPanel panel) {
     	
-    	 // This rectangle surrounds the particle we'll check against
-    	// all of the other rocks below
-    	Rectangle toCheck = this.getBounds();
-    	
+    
     	// Cycle through all the other particles and check if they
     	// cross over the rectangle created above
     	for(Particle p: panel.particles){
     		
-    		// Creates a bounding rectangle that is used temporarily
-    		// for each other particle on the board
-    		Rectangle other = p.getBounds();
-    		
     		// Check to make sure we are not comparing one particle to itself
     		// Check if one particle crosses over another particle
-    		if(p != this && other.intersects(toCheck)){
+    		if(p != this && this.x + 2*this.radius >= p.x && this.x <= p.x + 2*p.radius && this.y + 2*this.radius >= p.y && this.y <= p.y + 2*p.radius){
     			//Equations for post-collision velocity for two particles in one dimension, 
     			//based on masses and initial velocities:
     			double dvx = (vx*(mass-p.mass)+2*p.mass*p.vx)/(mass+p.mass);
@@ -92,7 +77,6 @@ public class Particle extends JPanel{
     			p.vy = pdvy;
     		}
     	}
-    	
     }
     
     // move the ball one step

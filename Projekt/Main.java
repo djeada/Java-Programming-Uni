@@ -1,9 +1,6 @@
 package Projekt;
 
 import java.awt.BorderLayout;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import javax.swing.JFrame;
 
 public class Main extends JFrame{

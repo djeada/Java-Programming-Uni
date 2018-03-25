@@ -11,33 +11,28 @@ public class AnimationPanel extends JComponent {
 		
 		int width=this.getWidth();
 		int height=this.getHeight();
-		static int N = 500;
-		static Color bgColor = Color.black;
-		static Color ballColor = Color.white;
-		static int Radius = 100, radius = 10;
+		static int N = 100;
+		static Color bgColor = Color.white;
+		static Color ballColor = Color.red;
+		static int Radius = 50, radius = 5;
 		static int Mass = 100, mass = 10;
 		Graphics2D graphicSettings;
 		
-		// Holds every particle we create
-		
+		//holds every particle we create
 		public ArrayList<Particle> particles = new ArrayList<Particle>();
 		
-		// Creates n Particle objects and stores them in the ArrayList
-		
+		//creates n Particle objects and stores them in the ArrayList
 		public AnimationPanel() { 
 			populate ();
 		} 
 		
 		//holds all graphics settings
-		
 		public void paint(Graphics g) { 
 			
 			// Allows me to make many settings changes in regards to graphics
-			
 			graphicSettings = (Graphics2D)g; 
 			
 			// Draw a black background that is as big as the game board
-			
 			graphicSettings.setColor(bgColor);
 			graphicSettings.fillRect(0, 0, getWidth(), getHeight());
 			
@@ -48,13 +43,13 @@ public class AnimationPanel extends JComponent {
 			
 			//drawing the big particle
 			Particle big = particles.get(0);
-			
-			graphicSettings.fillOval(big.x,big.y, Radius, Radius);  
-			
+			graphicSettings.fillOval(big.x,big.y, 2*big.radius, 2*big.radius); 
+
 			// Cycle through all of the Particles objects
 			for(Particle p : particles.subList(1, particles.size())){								
 				// Stroke the particle on the screen
-				graphicSettings.fillOval(p.x-radius,p.y-radius, radius, radius);  
+				graphicSettings.setColor(Color.getHSBColor((float)(p.vx/p.vy), 1f, (float)(p.vx/p.vy)));
+				graphicSettings.fillOval(p.x,p.y, 2*radius, 2*radius);  
 			} 
 			
 		} 

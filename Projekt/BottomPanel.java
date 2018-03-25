@@ -74,15 +74,15 @@ public class BottomPanel extends JPanel{
 	}
 	
 	
-	public Timer timer = new Timer(20, new ActionListener() {
+	public Timer timer = new Timer(5, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
         		for(Particle p: animationPanel.particles){
         			p.wallTest(animationPanel);
         			p.collisionTest(animationPanel);
         			p.move();
+                	animationPanel.repaint();
         		}
-            	animationPanel.repaint();
         }
 	});
 	
