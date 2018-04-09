@@ -37,7 +37,7 @@ public class Paint extends JFrame{
 		this.drawPad = drawPad;
 		this.add(drawPad, BorderLayout.CENTER);
 
-		menu = new Menu(drawPad);
+		menu = new Menu(this);
 		this.setJMenuBar(menu);
 
 		

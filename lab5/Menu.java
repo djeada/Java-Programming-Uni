@@ -3,11 +3,11 @@ package lab5;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import java.awt.Graphics2D;
+
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -15,12 +15,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Menu extends JMenuBar {
 
-	PadDraw drawPad;
+	Paint parent;
 	JMenu file;
 	JMenuItem open, save;
 
-	public Menu(PadDraw drawPad) {
-		this.drawPad = drawPad;
+	public Menu(Paint parent) {
+		this.parent = parent;
 		file = new JMenu("File");
 
 		ListenForMenu lForMenu = new ListenForMenu();
@@ -40,10 +40,12 @@ public class Menu extends JMenuBar {
 	private class ListenForMenu implements ActionListener {				
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == open) {
-				saveToFile(drawPad);
+				openFile(parent);
+
 			}
 			else if(e.getSource() == save) {
-				openFile(drawPad);
+				saveToFile(parent);
+
 			}
 
 			else {
@@ -52,43 +54,43 @@ public class Menu extends JMenuBar {
 		}
 	}
 	
-	public void saveToFile(PadDraw drawPad)  {
-	            JFileChooser chooseDirec = new JFileChooser();
-	            chooseDirec.setFileSelectionMode(JFileChooser.FILES_ONLY);
-	            chooseDirec.showSaveDialog(this);
-	            File file = chooseDirec.getSelectedFile();
-	            file = new File(file+".png");
-	             
-	            BufferedImage image=new BufferedImage(
-	                   drawPad.getWidth(), drawPad.getHeight(),
-	                   BufferedImage.TYPE_INT_RGB);
-	            Graphics2D g2=(Graphics2D)image.getGraphics();
-	           drawPad.paint(g2);
-	        try
-	        {
-	            ImageIO.write(image, "png", new File("/tmp/image.png"));
-	        }
-	        catch (Exception e)
-	             
-	        {
-	        }
+	public void saveToFile(Paint parent)  {
+		BufferedImage img = new BufferedImage(1200, 800, BufferedImage.TYPE_INT_RGB);
+		Graphics g = img.createGraphics();
+		parent.drawPad.paintComponent(g);
+
+		JFileChooser chooseDirec = new JFileChooser();
+		int returnVal = chooseDirec.showDialog(null, "wybierz");
+		chooseDirec.setDialogTitle("wybierz");
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			try {
+				ImageIO.write(img, "png",chooseDirec.getSelectedFile());
+				System.out.println("Plik zapisano poprawnie");
+			} catch (IOException e1) {
+				System.out.print("PLIK NIE ZOSTA£ ZAPISANY");
+			}
+
+		}
 	    	
 	}
 
-	public void openFile(PadDraw drawPad) {
+	public void openFile(Paint parent) {
         JFileChooser chooseDirec = new JFileChooser();
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
 	        "Graphic files", "jpg", "gif", "png", "bmp");
-	    chooseDirec.setFileFilter(filter);
-	    int returnVal = chooseDirec.showOpenDialog(null);
+	    chooseDirec.addChoosableFileFilter(filter);
+		int returnVal = chooseDirec.showDialog(null, "Open");
 	    if(returnVal == JFileChooser.APPROVE_OPTION) {
 	    	BufferedImage image = null;
-            try {
-            	image = ImageIO.read(chooseDirec.getSelectedFile());
-			} catch (IOException e) {
-				e.printStackTrace();
+			try {
+				image = ImageIO.read(chooseDirec.getSelectedFile());
+				System.out.println("Plik otworzono poprawnie");
+			} catch (IOException ex) {
+				System.out.print("PLIK NIE ZOSTA£ POPRAWNIE OTWORZONY");
 			}
-            drawPad.setBackgroundImage(image);
+			parent.drawPad.setBackgroundImage(image);
 	    }
+	  
 	}
+	
 }
