@@ -30,11 +30,11 @@ public class Main extends JFrame{
 		// Make the drawing area take up the rest of the frame
 		frame.add(animationPanel, BorderLayout.CENTER);
 		
-		bottomPanel = new BottomPanel(repaintTheBoard, animationPanel);		
-		frame.add(bottomPanel, BorderLayout.SOUTH);
-		
 		repaintTheBoard = new RepaintTheBoard(animationPanel);
 		repaintTheBoard.gameStart();
+		
+		bottomPanel = new BottomPanel(repaintTheBoard, animationPanel);		
+		frame.add(bottomPanel, BorderLayout.SOUTH);
 		
 		// Show the frame
 		frame.setVisible(true);

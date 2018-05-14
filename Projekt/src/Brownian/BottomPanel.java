@@ -121,24 +121,6 @@ public class BottomPanel extends JPanel {
 	}
 	
 	//implenting methods
-	
-		void reset() {
-			if(!repaintTheBoard.getPaused()) {
-				repaintTheBoard.setPaused(false);
-				try {
-					Thread.sleep(10);
-					animationPanel.reset();
-					repaintTheBoard.setPaused(true);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			}
-			else {
-				animationPanel.reset();
-				repaintTheBoard.setPaused(true);
-				checkBox1.setSelected(true);
-			}
-		}
 		
 		//implementing listeners
 		
@@ -146,11 +128,11 @@ public class BottomPanel extends JPanel {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(checkBox1.isSelected()) {
-					repaintTheBoard.setPaused(false); // Toggle pause/resume flag
-					//transferFocusUpCycle();  // To handle key events
+					repaintTheBoard.setPaused(true); // Toggle pause/resume flag
+					transferFocusUpCycle();  // To handle key events
 				}
 				else {
-		           repaintTheBoard.setPaused(true); // Toggle pause/resume flag
+		           repaintTheBoard.setPaused(false); // Toggle pause/resume flag
 		           transferFocusUpCycle();  // To handle key events
 		       }
 		    }
@@ -227,7 +209,6 @@ public class BottomPanel extends JPanel {
 						newR = Integer.parseInt(JOptionPane.showInputDialog(Main.frame, "Enter the new radius", "Edit radius size", JOptionPane.QUESTION_MESSAGE, null, null, oldR).toString());
 						if(oldR == newR) { return; }
 						animationPanel.getElement(0).radius = newR;
-						reset();
 					}
 					catch(NumberFormatException nfe) { JOptionPane.showMessageDialog(Main.frame, "Input was an invalid number", "Invalid Input", JOptionPane.WARNING_MESSAGE, null); }
 					catch(NullPointerException npe) {  }

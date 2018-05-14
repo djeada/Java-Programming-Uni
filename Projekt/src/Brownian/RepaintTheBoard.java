@@ -11,7 +11,7 @@ public class RepaintTheBoard {
 			this.animationPanel = animationPanel;
 	}
 	 
-	/** Start the ball bouncing. */
+	// A method which makes the particles bouncing
 	   public void gameStart() {
 	      // Run the game logic in its own thread.
 	      Thread gameThread = new Thread() {

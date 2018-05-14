@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
+import java.util.*;
 
 public class AnimationPanel extends JComponent {
 	
@@ -103,7 +104,8 @@ public class AnimationPanel extends JComponent {
 		}
    }
    
-	void launcher() {    
+	void launcher() {   
+		
 	    for (int i = currentNumParticles; i < MAX; i++) {
 	    	// Allocate the particle, but position later before the launch
 	    	Particle p = new Particle(20, canvasHeight - 20, radius, 5, 45, mass, smallColor);
@@ -119,6 +121,7 @@ public class AnimationPanel extends JComponent {
 		smallColor = Color.GREEN;
 		Radius = 50;
 		radius = 10;
+		setCurrentNumParticles(100);
 		populate();
 	}
 	
