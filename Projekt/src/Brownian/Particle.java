@@ -1,8 +1,14 @@
 package Brownian;
 import java.awt.*;
 import java.util.Formatter;
-
 import collisionphysics.*;
+
+/**
+ * New data type, used
+ * 
+ * @author AD
+ *
+ */
 
 public class Particle {
 	
@@ -25,29 +31,45 @@ public class Particle {
       this.mass = mass;
       this.color = color;
    }
-
-   // Working copy for computing response in intersect(), to avoid repeatedly allocating objects.
-   private CollisionResponse tempResponse = new CollisionResponse(); 
-
-   // Maintain the response of the earliest collision detected by this ball instance. 
-   //Only the first collision matters!
-   CollisionResponse earliestCollisionResponse = new CollisionResponse();
    
-   //Check if there will be collision with the borders of a Board in the coming time-step.
-   public void intersect(Board board, float timeLimit) {
-      // Invoke movingPointIntersectsRectangleOuter, 
-      // Earliest collision to one of the 4 borders is returned.
-      CollisionPhysics.pointIntersectsRectangleOuter(x, y, vx, vy, radius,
-            board.minX, board.minY, board.maxX, board.maxY, timeLimit, tempResponse);
-      if (tempResponse.t < earliestCollisionResponse.t) {
-         earliestCollisionResponse.copy(tempResponse);
-      }
+   
+// Bounce of vertical wall by reflecting x-velocity
+   private void bounceOffVerticalWall(float distance) {
+       vx = -vx;
+       x = distance;
+   }
+
+   // Bounce of horizontal wall by reflecting y-velocity
+   private void bounceOffHorizontalWall(float distance) {
+       vy = -vy;
+       y = distance;
+   }
+	
+   // Reverse the direction of the particle whenever it reaches one of the four walls
+   // In case of aperiodic boundary conditions make the particle appear on the opposite side of the board
+   public void wallTest(AnimationPanel panel, boolean periodicity) {
+	   if(periodicity == true) {
+			if (x < radius)bounceOffVerticalWall(radius);
+		    if (x > panel.getWidth()-radius) bounceOffVerticalWall(panel.getWidth()-radius);
+		   	if (y < radius)bounceOffHorizontalWall(radius);
+		    if (y > panel.getHeight()-radius) bounceOffHorizontalWall(panel.getHeight()-radius);
+	   }
+	   else if(periodicity == false){
+		   if (x < - radius) setX(panel.getWidth());
+		   if (x > panel.getWidth()+radius) setX(0);
+		   if (y < - radius)setY(panel.getHeight());
+		   if (y > panel.getHeight()+radius) setY(0);
+	   }
    }
    
    // Working copy for computing response in intersect(Particle, timeLimit), to avoid repeatedly allocating objects.
    private CollisionResponse thisResponse = new CollisionResponse(); 
    private CollisionResponse anotherResponse = new CollisionResponse(); 
-
+   
+   // Maintain the response of the earliest collision detected by this ball instance. 
+   //Only the first collision matters!
+   CollisionResponse earliestCollisionResponse = new CollisionResponse();
+   
    //Check if this ball collides with the given another ball in the interval  (0, timeLimit].
    public void intersect(Particle another, float timeLimit) {
       // Call movingPointIntersectsMovingPoint() with timeLimit.
@@ -69,8 +91,8 @@ public class Particle {
    }
 
    // Update the states of this ball for the given time.
-   //If this ball's earliestCollisionResponse.time equals to time, this
-   //ball is the one that collided; otherwise, there is a collision elsewhere.
+   // If this ball's earliestCollisionResponse.time equals to time, this
+   // Ball is the one that collided; otherwise, there is a collision elsewhere.
    
    public void update(float time) {
       // Check if this ball is responsible for the first collision?
@@ -101,12 +123,12 @@ public class Particle {
       return (float)Math.toDegrees(Math.atan2(-vy, vx));
    }
    
-   //Return the kinetic energy (0.5mv^2) */
+   // Return the kinetic energy (0.5mv^2) */
    public float getKineticEnergy() {
       return 0.5f * mass * (vx * vx + vy * vy);
    }
 
-   //Display info
+   // Display info
    public String toString() {
       sb.delete(0, sb.length());
       formatter.format("@(%3.0f,%3.0f) r=%3.0f V=(%3.0f,%3.0f) " +
@@ -117,5 +139,14 @@ public class Particle {
    }
    private StringBuilder sb = new StringBuilder();
    private Formatter formatter = new Formatter(sb);
-
+  
+   // Setters
+   void setX (float x) {
+	   this.x = x;
+   }
+   
+   void setY (float y) {
+	   this.y = y;
+   }
+   
 }

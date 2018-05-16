@@ -3,6 +3,13 @@ package Brownian;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * A rectangular container board with borders.  
+ * 
+ * @author AD
+ *
+ */
+
 public class Board {
 	
 	// Board's bounds
@@ -18,8 +25,8 @@ public class Board {
 	   public Board(int x, int y, int width, int height, Color colorFilled, Color colorBorder) {
 	      minX = x;
 	      minY = y;
-	      maxX = x + width - 10;
-	      maxY = y + height - 10;
+	      maxX = x + width - 1;
+	      maxY = y + height - 1;
 	      this.colorFilled = colorFilled;
 	      this.colorBorder = colorBorder;
 	   }

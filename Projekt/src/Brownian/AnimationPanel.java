@@ -4,7 +4,13 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
-import java.util.*;
+
+/**
+ * The control logic and main display panel for simulation. 
+ * 
+ * @author AD
+ *
+ */
 
 public class AnimationPanel extends JComponent {
 	
@@ -21,7 +27,9 @@ public class AnimationPanel extends JComponent {
 	
 	//Graphics setting
 	Graphics2D graphicSettings;
-	private Board board; 	// The container rectangular box
+	
+	// The container rectangular box
+	private Board board; 	
 	private int canvasWidth;
 	private int canvasHeight;
 
@@ -35,8 +43,8 @@ public class AnimationPanel extends JComponent {
 		canvasHeight = height; 
       
 		//Create the first 100 particles
-	    populate();
-	    
+		populate();
+		
 	    // The rest of the particles, that can be launched using the launch button
 	    launcher();
 	    
@@ -75,9 +83,9 @@ public class AnimationPanel extends JComponent {
   		board.draw(g);
   		
   		for (Particle p : particles) {
-  			p.draw(g);;
+			p.draw(g);
 		}
-  		
+	
   		// Display balls' information
   		g.setColor(Color.BLACK);
   		g.setFont(new Font("Courier New", Font.PLAIN, 12));
@@ -86,26 +94,28 @@ public class AnimationPanel extends JComponent {
 
    void populate() {
 	   
-	   //creating one big particle
+	   // Create one big particle an add it to the list particles
 	   Particle big = new Particle(400, 200, Radius, 0, 0, Mass, bigColor);
 	   particles.add(big);
-		
-		//creating n number of smaller particles
-		for(int i = 0; i < currentNumParticles-1; i++){
-			//setting default position
+	   
+	   // Create n number of smaller particles and add them to the list particles
+	   for(int i = 0; i < currentNumParticles-1; i++){
+			
+			// Set default position at random
 			int x=(new Random()).nextInt(500)+50;
 			int y=(new Random()).nextInt(300)+40;
 			
+			// Set random velocity and angle
 			double v = 10*(new Random()).nextGaussian();
 			int teta = (new Random()).nextInt(120);
-	        
+			
 			Particle p = new Particle(x, y, radius, (float)v, teta, mass, smallColor);
 			particles.add(p);
-		}
+					
+		}		
    }
    
 	void launcher() {   
-		
 	    for (int i = currentNumParticles; i < MAX; i++) {
 	    	// Allocate the particle, but position later before the launch
 	    	Particle p = new Particle(20, canvasHeight - 20, radius, 5, 45, mass, smallColor);
@@ -147,7 +157,7 @@ public class AnimationPanel extends JComponent {
 	  return board;
    }
    
-	//all the setters
+	// All the setters
 	public void setBgColor(Color bgColor) {
 		this.bgColor = bgColor;
 	}
