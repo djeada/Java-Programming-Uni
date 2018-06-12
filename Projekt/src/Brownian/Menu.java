@@ -25,7 +25,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.awt.Desktop;
-import java.awt.Graphics2D;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -38,9 +37,13 @@ import java.net.URISyntaxException;
 
 public class Menu extends JMenuBar implements ActionListener {
 	
-	JMenu option1, option2, Help;    
-	JMenuItem snapShot, info, exit, option21, option22, option23;
-	JTextField help;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	JMenu options, help;    
+	JMenuItem info, exit;
+	JTextField helpTextField;
 
 	JFileChooser choose;
 	
@@ -48,31 +51,31 @@ public class Menu extends JMenuBar implements ActionListener {
 	Board board;
 
 	static BufferedImage image;
-	static File imageFile = new File("icon.png");
+	static File imageFile = new File("img/icon.png");
 	static File infoFile = new File("info.txt");
 	
 	public Menu(){   
 		
-		option1 = new JMenu("Options");    
-		option2 = new JMenu("Data");    
-		Help = new JMenu("Help");
+		// Create JMenuBar components
+		options = new JMenu("Options");   
+		help = new JMenu("Help");
 		
-		snapShot = new JMenuItem("Take a snap shot");    
+		// Create JMenuItems 
 		info = new JMenuItem("Info");    
-		exit = new JMenuItem("Exit");    
-		option21 = new JMenuItem("option21");
-		option22 = new JMenuItem("option22");
-		option23 = new JMenuItem("option23");
+		exit = new JMenuItem("Exit");   
 		
-		help = new JTextField(20);
-		help.setText("What's bothering you?");
-		Help.add(help);
-		//JTextField mTextField = new JTextField();
-	    help.addKeyListener(new KeyAdapter() {
+		// Create Help JMenuItem
+		helpTextField = new JTextField(20);
+		helpTextField.setText("What's bothering you?");
+		help.add(helpTextField);
+		
+		
+		// Help option Listener
+	    helpTextField.addKeyListener(new KeyAdapter() {
 	        @Override
 	        public void keyPressed(KeyEvent e) {
 	            if(e.getKeyCode() == KeyEvent.VK_ENTER){
-	            	String url = help.getText();
+	            	String url = helpTextField.getText();
 	            	url = url.replace(" ", "+");
 	            	url = "http://lmgtfy.com/?q=" + url;
 	            	System.out.println(url);
@@ -94,22 +97,16 @@ public class Menu extends JMenuBar implements ActionListener {
 	        }
 	    });
 		
-		option1.add(snapShot);
-		option1.add(info);
-		option1.add(exit);
+	    // Add JMenuItems and its listeners to MenuBar
+		options.add(info);
+		options.add(exit);
 		
-		option2.add(option21);
-		option2.add(option22);
-		option2.add(option23);
-		
-		snapShot.addActionListener(this);
 		info.addActionListener(this);
 		exit.addActionListener(this);
 		
 				
-		this.add(option1);
-		this.add(option2);
-		this.add(Help); 
+		this.add(options);
+		this.add(help); 
 		
 	}
 
@@ -117,27 +114,8 @@ public class Menu extends JMenuBar implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object ob = e.getSource();
-		
-		/*
-		//snap shot 
-		if (ob == snapShot) {
-			final JFileChooser fc = new JFileChooser();
-			int returnVal = fc.showDialog(null, "Save");
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				BufferedImage image = new BufferedImage(animationPanel.getWidth(), animationPanel.getHeight(), BufferedImage.TYPE_INT_ARGB);
-				Graphics2D g2d = image.createGraphics();
-				animationPanel.paintAll(g2d); //trzeba cos poprawic, zeby faktycznie w g2d byl nasz animationPanel
-				try {
-					ImageIO.write(image, "png", fc.getSelectedFile());
-				} catch (IOException e1) {
-					System.out.println(e1.getMessage());
-				}
-
-			}
-		}
-		*/
 	
-		//brief description of phenomenon
+		// Open description window
 		if (ob == info) {
 			try {
 				FileInputStream isr = new FileInputStream(infoFile);
@@ -157,7 +135,7 @@ public class Menu extends JMenuBar implements ActionListener {
 			
 		}
 		
-		//exit window
+		// Open exit dialog window
 		if (ob == exit) {
 			JOptionPane exitPane = new JOptionPane();
 			int choice = exitPane.showConfirmDialog(null, "Exit?", "hsjks", JOptionPane.YES_NO_OPTION);
@@ -168,10 +146,9 @@ public class Menu extends JMenuBar implements ActionListener {
 				exitPane.setVisible(false);
 			}
 		}
-		
 	} 
 	
-	//reading file method
+	// Method used to read a file
 	public static String getFileContent(FileInputStream fis) throws IOException {
 		try( BufferedReader br = new BufferedReader( new InputStreamReader(fis))) {
 			StringBuilder sb = new StringBuilder();
@@ -185,3 +162,4 @@ public class Menu extends JMenuBar implements ActionListener {
 	}
 	
 }
+

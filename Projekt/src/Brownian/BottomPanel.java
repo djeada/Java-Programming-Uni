@@ -31,16 +31,22 @@ import javax.swing.event.ChangeListener;
 
 public class BottomPanel extends JPanel {
 	
-	private JButton SRButton, SMButton, SCButton, SRCButton, BRButton, BMButton, BCButton, BGCButton, ResetButton, LauncherButton;
-	private JTextField launcherfield;
-	private static int launchedparticles;
-	private JCheckBox checkBox1, checkBox2;
-	private JSlider slider1;
-	private JPanel panel1, panel2, panel3;
-	private JLabel SPnumber;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JButton smallRadiusButton, smallMassButton, smallColorButton, smallRandomColorButton;
+	private JButton bigRadiusButton, bigMassButton, bigColorButton;
+	private JButton bgColorButton, resetButton, launcherButton;
+	private JTextField launcherField;
+	private static int launchedParticles;
+	private JCheckBox pauseCheckBox, aperiodicCheckBox;
+	private JSlider speedSlider;
+	private JPanel smallParticlesPAanel, bigParticlesPanel, animationSettingsPanel;
+	private JLabel smallParticlesNumber;
 	private AnimationPanel animationPanel;
 	private RepaintTheBoard repaintTheBoard;
-	boolean launchboolean = true;
+	boolean launchBoolean = true;
 	
 	//Constructor to initialize UI components of the controls
 	public BottomPanel(RepaintTheBoard repaintTheBoard, AnimationPanel animationPanel) {
@@ -60,105 +66,120 @@ public class BottomPanel extends JPanel {
 		sliderListener sListener = new sliderListener();
 
 		// Panel to hold all the settings for the small particle
-		panel1 = new JPanel();
+		smallParticlesPAanel = new JPanel();
 		Border Border1 = BorderFactory.createTitledBorder("Small particles properties");
-		panel1.setBorder(Border1);
+		smallParticlesPAanel.setBorder(Border1);
 		
 		// Button used to change the radius of a particle
-		SRButton = new JButton("Set Radius");
-		SRButton.addActionListener(bListener);
-		panel1.add(SRButton);
+		smallRadiusButton = new JButton("Set Radius");
+		smallRadiusButton.setToolTipText("Change radius of small particles");
+		smallRadiusButton.addActionListener(bListener);
+		smallParticlesPAanel.add(smallRadiusButton);
 				
 		// Button used to change the mass of a particle
-		SMButton = new JButton("Set Mass");
-		SMButton.addActionListener(bListener);
-		panel1.add(SMButton);
+		smallMassButton = new JButton("Set Mass");
+		smallMassButton.setToolTipText("Change mass of small particles");
+		smallMassButton.addActionListener(bListener);
+		smallParticlesPAanel.add(smallMassButton);
 				
 		// Button used to change the color of a particle
-		SCButton = new JButton("Set Color");
-		SCButton.addActionListener(bListener);
-		panel1.add(SCButton);
+		smallColorButton = new JButton("Set Color");
+		smallColorButton.setToolTipText("Change color of small particles");
+		smallColorButton.addActionListener(bListener);
+		smallParticlesPAanel.add(smallColorButton);
 			
 		// Button used to change the color of a particle to random
-		SRCButton = new JButton("Random Color");
-		SRCButton.addActionListener(bListener);
-		panel1.add(SRCButton);
+		smallRandomColorButton = new JButton("Random Color");
+		smallRandomColorButton.setToolTipText("Give all small particles random color");
+		smallRandomColorButton.addActionListener(bListener);
+		smallParticlesPAanel.add(smallRandomColorButton);
 				
 		// Slider for adjusting the speed of all the balls by a factor
 		int minFactor = 5;    // percent
 		int maxFactor = 200;  // percent
-		slider1 = new JSlider(JSlider.HORIZONTAL, minFactor, maxFactor, 100);
-		slider1.addChangeListener(sListener);
-		panel1.add(new JLabel("Speed"));
-		panel1.add(slider1);
+		speedSlider = new JSlider(JSlider.HORIZONTAL, minFactor, maxFactor, 100);
+		speedSlider.setToolTipText("Change speed of small particles in range from 5% to 200% of current speed");
+		speedSlider.addChangeListener(sListener);
+		smallParticlesPAanel.add(new JLabel("Speed"));
+		smallParticlesPAanel.add(speedSlider);
 		
 		// Add panel1 to the bottomPanel
-		this.add(panel1);
+		this.add(smallParticlesPAanel);
 
 		// Panel to hold all the settings for the big particle
-		panel2 = new JPanel();
+		bigParticlesPanel = new JPanel();
 		Border Border2 = BorderFactory.createTitledBorder("Big particle properties");
-		panel2.setBorder(Border2);
+		bigParticlesPanel.setBorder(Border2);
 				
 		// Button used to change the radius of a particle
-		BRButton = new JButton("Set Radius");
-		BRButton.addActionListener(bListener);
-		panel2.add(BRButton);
+		bigRadiusButton = new JButton("Set Radius");
+		bigRadiusButton.setToolTipText("Change radius of big particle");
+		bigRadiusButton.addActionListener(bListener);
+		bigParticlesPanel.add(bigRadiusButton);
 				
 		// Button used to change the mass of a particle
-		BMButton = new JButton("Set Mass");
-		BMButton.addActionListener(bListener);
-		panel2.add(BMButton);
+		bigMassButton = new JButton("Set Mass");
+		bigMassButton.setToolTipText("Change mass of big particle");
+		bigMassButton.addActionListener(bListener);
+		bigParticlesPanel.add(bigMassButton);
 				
 		// Button used to change the color of a particle
-		BCButton = new JButton("Set Color");
-		BCButton.addActionListener(bListener);
-		panel2.add(BCButton);
+		bigColorButton = new JButton("Set Color");
+		bigColorButton.setToolTipText("Change color of big particle");
+		bigColorButton.addActionListener(bListener);
+		bigParticlesPanel.add(bigColorButton);
 
 		// Add panel2 to the bottomPanel
-		this.add(panel2);
+		this.add(bigParticlesPanel);
 
 		// Panel holding all the general options
-		panel3 = new JPanel();
+		animationSettingsPanel = new JPanel();
 		Border Border3 = BorderFactory.createTitledBorder("General options");
-		panel3.setBorder(Border3);
+		animationSettingsPanel.setBorder(Border3);
 				
 		// Checkbox to toggle pause/resume movement
-		panel3.add(new JLabel("Pause"));
-		checkBox1 = new JCheckBox();
-		checkBox1.addItemListener(cListener);
-		panel3.add(checkBox1);
+		animationSettingsPanel.add(new JLabel("Pause"));
+		pauseCheckBox = new JCheckBox();
+		pauseCheckBox.setToolTipText("Pause animation");
+		pauseCheckBox.addItemListener(cListener);
+		animationSettingsPanel.add(pauseCheckBox);
 		
 		// Checkbox to enable aperiodic boundary conditions
-		panel3.add(new JLabel("Aperiodic"));
-		checkBox2 = new JCheckBox();
-		checkBox2.addItemListener(cListener);
-		panel3.add(checkBox2);
+		animationSettingsPanel.add(new JLabel("Aperiodic"));
+		aperiodicCheckBox = new JCheckBox();
+		aperiodicCheckBox.setToolTipText("Change borders mode to aperiodic");
+		aperiodicCheckBox.addItemListener(cListener);
+		animationSettingsPanel.add(aperiodicCheckBox);
 				
 		// Button for launching the remaining balls
-		launcherfield = new JTextField("Enter numer of particles");
-		launcherfield.setMinimumSize(new Dimension(200, 5));
-		LauncherButton = new JButton("Launch!");
-		LauncherButton.addActionListener(bListener);
-		panel3.add(launcherfield);
-		panel3.add(LauncherButton);
+		launcherField = new JTextField("Enter number");
+		launcherField.setToolTipText("Set number of particles to launch");
+		launcherField.setPreferredSize(new Dimension(100, 20));
+		launcherButton = new JButton("Launch!");
+		launcherButton.setToolTipText("Launch new particles.");
+		launcherButton.addActionListener(bListener);
+		animationSettingsPanel.add(launcherField);
+		animationSettingsPanel.add(launcherButton);
 		
 		// Button used to change the background color
-		BGCButton = new JButton("BG COLOR");
-		BGCButton.addActionListener(bListener);
-		panel3.add(BGCButton);
+		bgColorButton = new JButton("BG COLOR");
+		bgColorButton.setToolTipText("Change background color");
+		bgColorButton.addActionListener(bListener);
+		animationSettingsPanel.add(bgColorButton);
 						
 		// Button used to go back to the default settings
-		ResetButton = new JButton("RESET");
-		ResetButton.addActionListener(bListener);
-		panel3.add(ResetButton);
+		resetButton = new JButton("RESET");
+		resetButton.setToolTipText("Reset all changes.");
+		resetButton.addActionListener(bListener);
+		animationSettingsPanel.add(resetButton);
 		
 		// Label displaying current number of particles
-		SPnumber = new JLabel("No. of particles: " + animationPanel.getCurrentNumParticles());
-		panel3.add(SPnumber);
+		smallParticlesNumber = new JLabel("No. of particles: " + animationPanel.getCurrentNumParticles());
+		smallParticlesNumber.setToolTipText("Current number of particles");
+		animationSettingsPanel.add(smallParticlesNumber);
 		
 		// Add panel3 to the bottomPanel
-		this.add(panel3);
+		this.add(animationSettingsPanel);
 	}
 	
 	// Implement the listeners	
@@ -167,21 +188,19 @@ public class BottomPanel extends JPanel {
 	private class checkBoxListener implements ItemListener{
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				if(checkBox1.isSelected()) {
+				if(pauseCheckBox.isSelected()) {
 					repaintTheBoard.setPaused(true); 
 					transferFocusUpCycle();  
 				}
-				else if (!checkBox1.isSelected()) {
+				else if (!pauseCheckBox.isSelected()) {
 		           repaintTheBoard.setPaused(false);
 		           transferFocusUpCycle();  
 		       }
-				if(checkBox2.isSelected()) {
+				if(aperiodicCheckBox.isSelected()) {
 					repaintTheBoard.setPeriodicity(false);
-					System.out.print(repaintTheBoard.getPeriodicity());
 				}
-				else if (!checkBox2.isSelected()) {
+				else if (!aperiodicCheckBox.isSelected()) {
 					repaintTheBoard.setPeriodicity(true);
-					System.out.print(repaintTheBoard.getPeriodicity());
 			    }
 		    }
 		}
@@ -198,8 +217,8 @@ public class BottomPanel extends JPanel {
 					ballSavedSpeedXs[i] = animationPanel.getElement(i).vx;
 					ballSavedSpeedYs[i] = animationPanel.getElement(i).vy;
 				}
-				int minFactor = 5;    // percent
-				int maxFactor = 200;  // percent
+				//int minFactor = 5;    // percent
+				//int maxFactor = 200;  // percent
 				
 				int percentage = (int)source.getValue();
 				for (int i = 0; i < animationPanel.getCurrentNumParticles(); i++) {
@@ -216,8 +235,8 @@ public class BottomPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			// Change radius of the small particles
-			if(e.getSource() == SRButton) {
-				int oldR = animationPanel.radius;
+			if(e.getSource() == smallRadiusButton) {
+				int oldR = AnimationPanel.radius;
 				int newR = oldR;
 				try {
 					newR = Integer.parseInt(JOptionPane.showInputDialog(
@@ -234,8 +253,8 @@ public class BottomPanel extends JPanel {
 			}
 
 			// Change mass of the small particles
-			else if(e.getSource() == SMButton) {
-				int oldM = animationPanel.mass;
+			else if(e.getSource() == smallMassButton) {
+				int oldM = AnimationPanel.mass;
 				int newM = oldM;
 				try {
 					newM = Integer.parseInt(JOptionPane.showInputDialog(
@@ -251,7 +270,7 @@ public class BottomPanel extends JPanel {
 			}
 			
 			// Change color of the small particles
-			else if(e.getSource() == SCButton) {
+			else if(e.getSource() == smallColorButton) {
 				Color color1 = JColorChooser.showDialog(null, "Change the color of small particles", Color.WHITE);
 				for (int i = 1; i < animationPanel.getCurrentNumParticles(); i++) {
 					animationPanel.getElement(i).color = color1;
@@ -260,15 +279,16 @@ public class BottomPanel extends JPanel {
 			}
 			
 			// Change color of the small particles to random
-			else if(e.getSource() == SRCButton) {
+			else if(e.getSource() == smallRandomColorButton) {
 				for (int i = 1; i < animationPanel.getCurrentNumParticles(); i++) {
-					animationPanel.getElement(i).color = Color.getHSBColor((float)(2*3.1416*animationPanel.getElement(i).vy/animationPanel.getElement(i).vx), 1f, (float)(animationPanel.getElement(i).y/animationPanel.getElement(i).x));
+					animationPanel.getElement(i).color = Color.getHSBColor((float)(2*3.1416*animationPanel.getElement(i).vy/animationPanel.getElement(i).vx), 1f, 
+							(float)(animationPanel.getElement(i).y/animationPanel.getElement(i).x));
 				}
 			}			
 			
 			// Change radius of the big particle
-			else if(e.getSource() == BRButton) {
-				int oldR = animationPanel.Radius;
+			else if(e.getSource() == bigRadiusButton) {
+				int oldR = AnimationPanel.Radius;
 				int newR = oldR;
 				try {
 					newR = Integer.parseInt(JOptionPane.showInputDialog(
@@ -282,8 +302,8 @@ public class BottomPanel extends JPanel {
 			}
 			
 			// Change mass of the big particle
-			else if(e.getSource() == BMButton) {
-				int oldM = animationPanel.Mass;
+			else if(e.getSource() == bigMassButton) {
+				int oldM = AnimationPanel.Mass;
 				int newM = oldM;
 				try {
 					newM = Integer.parseInt(JOptionPane.showInputDialog(
@@ -298,26 +318,27 @@ public class BottomPanel extends JPanel {
 			}
 			
 			// Change color of the big particle
-			else if(e.getSource() == BCButton) {
+			else if(e.getSource() == bigColorButton) {
 				Color color2 = JColorChooser.showDialog(null, "Change the color of big particle", Color.WHITE);
 				animationPanel.getElement(0).color = color2;
 			}
 			
 			// Change color of the background
-			else if(e.getSource() == BGCButton) {
+			else if(e.getSource() == bgColorButton) {
 				Color color3 = JColorChooser.showDialog(null, "Change background color", Color.WHITE);
 				animationPanel.getBoard().setColor(color3);
 				animationPanel.repaint();
 			}
 			
 			// Call the method reset from AnimationPanel whenever reset Button is pressed
-			else if(e.getSource() == ResetButton) {
+			else if(e.getSource() == resetButton) {
 				if(!repaintTheBoard.getPaused()) {
 					repaintTheBoard.setPaused(true);
 					try {
 						Thread.sleep(10);
 						animationPanel.reset();
 						repaintTheBoard.setPaused(false);
+						smallParticlesNumber.setText("No. of particles " + animationPanel.getCurrentNumParticles());
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
 					}
@@ -325,27 +346,28 @@ public class BottomPanel extends JPanel {
 				else {
 					animationPanel.reset();
 					repaintTheBoard.setPaused(false);
-					checkBox1.setSelected(false);
+					pauseCheckBox.setSelected(false);
+					smallParticlesNumber.setText("No. of particles " + animationPanel.getCurrentNumParticles());
 				}
 			
 			}
 			
 			// Launcher button listener used to launch new particles
-			else if(e.getSource() == LauncherButton) {
+			else if(e.getSource() == launcherButton) {
 				
 				// Set the number of launched particles
 				try{
-					launchedparticles = Integer.parseInt(launcherfield.getText());
+					launchedParticles = Integer.parseInt(launcherField.getText());
 				}
 				// Make sure input was a number
 				catch(NumberFormatException nfe) { JOptionPane.showMessageDialog(
 						AnimationGUI.frame, "Input was an invalid number", "Invalid Input", JOptionPane.WARNING_MESSAGE, null); 
 				}
 					
-				// Make a new thread to control the realse ot the particles
+				// Make a new thread to control the release of the particles
 					new Thread(() ->{
 						int counter = 0;
-						while (launchboolean) {
+						while (launchBoolean) {
 							Toolkit.getDefaultToolkit().sync();
 							try {
 								Thread.sleep(250);
@@ -354,26 +376,25 @@ public class BottomPanel extends JPanel {
 								e1.printStackTrace();
 							}
 							if (animationPanel.getCurrentNumParticles() < animationPanel.getMax()) {
-								animationPanel.getElement(animationPanel.getCurrentNumParticles()).x = 20;
-								animationPanel.getElement(animationPanel.getCurrentNumParticles()).y = animationPanel.getCanvasHeight() - 20;
+								animationPanel.addNew();
 								animationPanel.setCurrentNumParticles(animationPanel.getCurrentNumParticles() + 1);
 								
 								// Check if we haven't reached the maximum number of allowed particles
 								if (animationPanel.getCurrentNumParticles() == animationPanel.getMax()) {
 									// Disable the button, as there is no more particles
-									LauncherButton.setEnabled(false);
+									launcherButton.setEnabled(false);
 					              }
 					            }
 								transferFocusUpCycle();  // To handle key events
-								SPnumber.setText("No. of particles " + animationPanel.getCurrentNumParticles());
+								smallParticlesNumber.setText("No. of particles " + animationPanel.getCurrentNumParticles());
 								
 								// Determine when to stop
 								counter++;
-								if (counter >= launchedparticles) {
-									launchboolean = false;
+								if (counter >= launchedParticles) {
+									launchBoolean = false;
 								}
 						}
-						launchboolean = true;
+						launchBoolean = true;
 					}).start();
 				}
 			}

@@ -33,7 +33,7 @@ public class Particle {
    }
    
    
-// Bounce of vertical wall by reflecting x-velocity
+   // Bounce of vertical wall by reflecting x-velocity
    private void bounceOffVerticalWall(float distance) {
        vx = -vx;
        x = distance;
@@ -67,15 +67,15 @@ public class Particle {
    private CollisionResponse anotherResponse = new CollisionResponse(); 
    
    // Maintain the response of the earliest collision detected by this ball instance. 
-   //Only the first collision matters!
+   // Only the first collision matters!
    CollisionResponse earliestCollisionResponse = new CollisionResponse();
    
-   //Check if this ball collides with the given another ball in the interval  (0, timeLimit].
+   //Check if the particle collides with the given another particle in the interval  (0, timeLimit].
    public void intersect(Particle another, float timeLimit) {
       // Call movingPointIntersectsMovingPoint() with timeLimit.
       // Use thisResponse and anotherResponse, as the working copies, to store the
       // responses of this ball and another ball, respectively.
-      // Check if this collision is the earliest collision, and update the ball's
+      // Check if this collision is the earliest collision, and update the particle's
       // earliestCollisionResponse accordingly.
       CollisionPhysics.pointIntersectsMovingPoint(
             this.x, this.y, this.vx, this.vy, this.radius, this.mass,
@@ -90,20 +90,19 @@ public class Particle {
       }
    }
 
-   // Update the states of this ball for the given time.
-   // If this ball's earliestCollisionResponse.time equals to time, this
-   // Ball is the one that collided; otherwise, there is a collision elsewhere.
-   
+   // Update the states of the particle for the given time.
+   // If this Particle's earliestCollisionResponse.time equals to time, this
+   // Particle is the one that collided; otherwise, there is a collision elsewhere.
    public void update(float time) {
-      // Check if this ball is responsible for the first collision?
+      // Check if this particle is responsible for the first collision?
       if (earliestCollisionResponse.t <= time) {
-         // This ball collided, get the new position and speed
+         // This particle collided, get the new position and speed
          this.x = earliestCollisionResponse.getNewX(this.x, this.vx);
          this.y = earliestCollisionResponse.getNewY(this.y, this.vy);
          this.vx = earliestCollisionResponse.newSpeedX;
          this.vy = earliestCollisionResponse.newSpeedY;
       } else {
-         // This ball does not involve in a collision. Move straight.
+         // This particle does not involve in a collision. Move straight.
          this.x += this.vx * time;         
          this.y += this.vy * time;         
       }
@@ -118,15 +117,7 @@ public class Particle {
             (int)(2 * radius));
    }
    
-   // Return the direction of movement in degrees (counter-clockwise).
-   public float getMoveAngle() {
-      return (float)Math.toDegrees(Math.atan2(-vy, vx));
-   }
-   
-   // Return the kinetic energy (0.5mv^2) */
-   public float getKineticEnergy() {
-      return 0.5f * mass * (vx * vx + vy * vy);
-   }
+
 
    // Display info
    public String toString() {
@@ -141,12 +132,38 @@ public class Particle {
    private Formatter formatter = new Formatter(sb);
   
    // Setters
-   void setX (float x) {
+   public void setX (float x) {
 	   this.x = x;
    }
    
-   void setY (float y) {
+   public void setY (float y) {
 	   this.y = y;
    }
    
+   // Getters
+   public float getX() {
+	   return x;
+   }
+   
+   public float getY() {
+	   return y;
+   }
+   
+   public float getVx() {
+	   return vx;
+   }
+   
+   public float getVy() {
+	   return vy;
+   }
+   
+   // Return the kinetic energy (0.5mv^2) */
+   public float getKineticEnergy() {
+      return 0.5f * mass * (vx * vx + vy * vy);
+   }
+   
+   // Return the direction of movement in degrees (counter-clockwise).
+   public float getMoveAngle() {
+      return (float)Math.toDegrees(Math.atan2(-vy, vx));
+   }
 }

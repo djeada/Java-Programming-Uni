@@ -1,7 +1,10 @@
 package Brownian;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 /**
  * GUI class
@@ -11,14 +14,20 @@ import javax.swing.JFrame;
  */
 
 public class AnimationGUI extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Menu menu;
 	private	AnimationPanel animationPanel;
 	private BottomPanel bottomPanel;
 	private RepaintTheBoard repaintTheBoard;
+	private Charts chartsPanel;
 	public static JFrame frame;
 	
 	//Constructor to create the GUI components
 	public AnimationGUI() {
+		super("Brownian Motion Animation");
 		
 		// Create the frame
 		frame = new JFrame();
@@ -41,7 +50,8 @@ public class AnimationGUI extends JFrame{
 		
 		// Allocate and add the game panel      
 		animationPanel = new AnimationPanel(this.getWidth(), this.getHeight()-100);
-		
+		animationPanel.reset();
+
 		// Make the drawing area take up the rest of the frame
 		frame.add(animationPanel, BorderLayout.CENTER);
 		
@@ -53,6 +63,10 @@ public class AnimationGUI extends JFrame{
 		bottomPanel = new BottomPanel(repaintTheBoard, animationPanel);		
 		frame.add(bottomPanel, BorderLayout.SOUTH);
 	    
+		// Creating another frame to hold all the charts
+		chartsPanel = new Charts(repaintTheBoard.getDisplacementSeriesX(), repaintTheBoard.getDisplacementSeriesY(), 
+				repaintTheBoard.getVelocitySeriesX(), repaintTheBoard.getVelocitySeriesY(), repaintTheBoard.getKineticEnergy());
+
 		// Define the title for the frame
 		frame.setTitle("Brownian Motion");
 		

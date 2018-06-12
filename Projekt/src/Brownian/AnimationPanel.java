@@ -1,4 +1,5 @@
 package Brownian;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -14,6 +15,10 @@ import javax.swing.*;
 
 public class AnimationPanel extends JComponent {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Particle Parameters
 	private static final int MAX = 500; // Max number allowed 
 	private int currentNumParticles = 100; // Number currently active
@@ -21,7 +26,7 @@ public class AnimationPanel extends JComponent {
 	Color bigColor = Color.red;
 	Color smallColor = Color.green;
 	static int Radius = 50, radius = 10;
-	static int Mass = 100, mass = 10;
+	static int Mass = 1000, mass = 10;
 	double min = 0.5, max = 2;
 	Random r = new Random();
 	
@@ -45,8 +50,7 @@ public class AnimationPanel extends JComponent {
 		//Create the first 100 particles
 		populate();
 		
-	    // The rest of the particles, that can be launched using the launch button
-	    launcher();
+	    
 	    
 	    // Initialize the Board to fill the screen
 	    board = new Board(0, 0, canvasWidth, canvasHeight, bgColor, Color.BLACK);
@@ -115,12 +119,8 @@ public class AnimationPanel extends JComponent {
 		}		
    }
    
-	void launcher() {   
-	    for (int i = currentNumParticles; i < MAX; i++) {
-	    	// Allocate the particle, but position later before the launch
-	    	Particle p = new Particle(20, canvasHeight - 20, radius, 5, 45, mass, smallColor);
-	    	particles.add(p);
-	    }
+   void addNew() {
+	   particles.add(new Particle(20, canvasHeight - 20, radius, 5, 45, mass, smallColor));
    }
 	
 	// To be invoked when default settings are needed

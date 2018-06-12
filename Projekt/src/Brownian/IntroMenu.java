@@ -21,10 +21,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class IntroMenu extends JFrame{
-	private	AnimationGUI animationGUI;
+public class IntroMenu extends JFrame implements ActionListener{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private	AnimationGUI animationGui;
 	private Description description;
-	private JButton button1, button2, button3;
+	private Charts charts;
+	private JButton animButton, infoButton, exitButton;
 	public static JFrame frame;
     
 	//Constructor to create the GUI components
@@ -47,6 +52,11 @@ public class IntroMenu extends JFrame{
 
 		// Allocate  a new panel and make fill it with myImage
 		JPanel panel1 = new JPanel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -64,44 +74,27 @@ public class IntroMenu extends JFrame{
 		panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
 		
 		// Create start button and add it to the panel
-		button1 = new JButton("Start");
-		panel2.add(button1);
+		animButton = new JButton("Start");
+		panel2.add(animButton);
 		
 		// Add a listener to the button
-	    button1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				animationGUI = new AnimationGUI();
-				frame.setVisible(false);
-			}
-	    });
-	    
-	    // Create exit button and add it to the panel
-	 	button3 = new JButton("Info");	         
-	 	panel2.add(button3);
+		animButton.addActionListener(this);
+		
+	    // Create info button and add it to the panel
+		infoButton = new JButton("Info");	         
+	 	panel2.add(infoButton);
 	 		
 	 	// Add a listener to the button
-	 	button3.addActionListener(new ActionListener() {
-	 		@Override
-	 		public void actionPerformed(ActionEvent arg0) {
-	 			description = new Description();
-				frame.setVisible(false);			
-	 		}
-	 	});
+	 	infoButton.addActionListener(this);
 	    
 		// Create exit button and add it to; the panel
-		button2 = new JButton("Exit");	         
-		panel2.add(button2);
+	 	exitButton = new JButton("Exit");	         
+		panel2.add(exitButton);
 		
 		// Add a listener to the button
-	    button2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);			
-			}
-	    });
+		exitButton.addActionListener(this);
 	    
-	    //add panel holding buttons to the panel with background image
+	    // Add panel holding buttons to the panel with background image
 	    panel1.add(panel2);
 	    
 	    // Set panel1 as ContentPane of the frame
@@ -112,6 +105,29 @@ public class IntroMenu extends JFrame{
 		
 		// Show the frame
 		frame.setVisible(true);
+	}
+	
+	// Listeners
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object ob = e.getSource();
+			
+		// Open animation panel
+		if (ob == animButton) {
+			animationGui = new AnimationGUI();
+			frame.setVisible(false);
+		}
+		
+		// Open description window
+		if (ob == infoButton) {
+			description = new Description();
+		}
+				
+		// Exit application
+		if (ob == exitButton) {
+			System.exit(0);
+		}
+		
 	}
 	
 	//Method used to read an image from a file and return an image object
